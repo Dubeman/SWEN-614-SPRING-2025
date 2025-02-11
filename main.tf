@@ -4,6 +4,16 @@ provider "aws" {
   region = var.region
 }
 
+# S3 Backend Configuration
+terraform {
+  backend "s3" {
+    bucket         = var.bucket_name
+    key            = "dev/terraform.tfstate"
+    region         = var.aws_region
+    access_key     = var.aws_access_key_id
+    secret_key     = var.aws_secret_access_key
+  }
+}
 
 # VPC and Networking Resources
 # Create a VPC, subnets, and related networking infrastructure for WordPress.
