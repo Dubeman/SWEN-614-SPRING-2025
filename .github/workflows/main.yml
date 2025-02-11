@@ -46,6 +46,10 @@ jobs:
 
       # Step 4: Initialize Terraform working directory
       - name: Terraform Init
+        env:
+          TF_VAR_aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          TF_VAR_aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          TF_VAR_aws_region: ${{ secrets.AWS_REGION }}
         run: terraform init -backend-config="bucket=${{ secrets.S3_BUCKET }}" -backend-config="key=terraform.tfstate" -backend-config="region=${{ vars.AWS_REGION }}" -backend-config="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -backend-config="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
 
       # Step 5: Preview the infrastructure changes
@@ -87,6 +91,10 @@ jobs:
 
       # Step 4: Initialize Terraform working directory
       - name: Terraform Init
+        env:
+          TF_VAR_aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          TF_VAR_aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          TF_VAR_aws_region: ${{ secrets.AWS_REGION }}
         run: terraform init -backend-config="bucket=${{ secrets.S3_BUCKET }}" -backend-config="key=terraform.tfstate" -backend-config="region=${{ vars.AWS_REGION }}" -backend-config="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -backend-config="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
 
       # Step 5: Preview the infrastructure changes
