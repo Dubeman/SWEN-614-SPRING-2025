@@ -2,6 +2,21 @@ provider "aws" {
   region = "us-east-1"
 }
 
+terraform {
+  backend "s3" {
+    bucket         = "manas-rit-terraform"
+    key            = "terraform.tfstate"
+    region         = var.aws_region
+    access_key     = var.aws_access_key_id
+    secret_key     = var.aws_secret_access_key
+  }
+}
+
+variable "aws_region" {}
+variable "aws_access_key_id" {}
+variable "aws_secret_access_key" {}
+
+
 locals{
     aws_key= "MD_AWS_KEY"
 }
