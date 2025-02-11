@@ -1,0 +1,15 @@
+# System files
+.DS_Store
+
+# Terraform files
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# Ignore zip files
+*.zip
+
+#ignore sensitive_values.tfvars
+sensitive_values.tfvars
+
