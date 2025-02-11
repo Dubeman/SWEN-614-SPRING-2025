@@ -1,10 +1,12 @@
 provider "aws" {
-  region = "us-east-1"
+  region     = var.aws_region
+  access_key = var.aws_access_key_id
+  secret_key = var.aws_secret_access_key
 }
 
 terraform {
   backend "s3" {
-    bucket         = "manas-rit-terraform"
+    bucket         = var.bucket_name
     key            = "dev/terraform.tfstate"
     region         = var.aws_region
     access_key     = var.aws_access_key_id
@@ -12,9 +14,8 @@ terraform {
   }
 }
 
-
-locals{
-    aws_key= "MD_AWS_KEY"
+locals {
+  aws_key = var.aws_key
 }
 
 resource "aws_security_group" "allow_http_https_ssh" {
@@ -55,25 +56,17 @@ resource "aws_security_group" "allow_http_https_ssh" {
 }
 
 resource "aws_instance" "my_server" {
-  ami           = data.aws_ami.amazonlinux.id  # Amazon Linux 2 AMI ID (update as needed)
-  instance_type = var.instance_type  # Free-tier eligible instance type
-  key_name      = local.aws_key  # SSH key pair name
+  ami                    = data.aws_ami.amazonlinux.id  # Amazon Linux 2 AMI ID (update as needed)
+  instance_type          = var.instance_type            # Free-tier eligible instance type
+  key_name               = local.aws_key                # SSH key pair name
+  associate_public_ip_address = true                    # Ensure public IP is assigned
+  vpc_security_group_ids = [aws_security_group.allow_http_https_ssh.id]  # Attach the security group
+  user_data              = file("wp_install.sh")        # Execute wp_install.sh upon startup
 
-  # Ensure public IP is assigned
-  associate_public_ip_address = true
-
-  # Attach the security group
-  vpc_security_group_ids = [aws_security_group.allow_http_https_ssh.id]
-
-  # Execute wp_install.sh upon startup
-  user_data = file("wp_install.sh")
-
-  # Add tags to identify the instance
   tags = {
     Name = "my-ec2-instance"
   }
 }
-
 
 output "public_ip" {
   value       = aws_instance.my_server.public_ip
