@@ -12,7 +12,6 @@ on:
       aws-region:
         description: 'AWS Region'
         required: true
-        default: ${{ secrets.AWS_REGION }}
 
 jobs:
   terraform_apply:
