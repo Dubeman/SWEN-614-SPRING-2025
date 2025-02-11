@@ -11,6 +11,19 @@ variable "region" {
 
 }
 
+variable "aws_access_key_id" {
+  description = "AWS access key ID"
+  type        = string
+  sensitive   = true
+}
+
+variable "aws_secret_access_key" {
+  description = "AWS secret access key"
+  type        = string
+  sensitive   = true
+}
+
+
 variable "aws_key" {
   type        = string
   description = "SSH key pair name for ex2 instance access"
