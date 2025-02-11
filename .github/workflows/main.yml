@@ -58,8 +58,8 @@ jobs:
 
   terraform_destroy:
     name: "Terraform_destroy"
-    # Condition to run this job only when 'Terraform_apply' is selected
-    if: ${{ github.event.inputs.action == 'Terraform_apply' }}
+    # Condition to run this job only when 'Terraform_destroy' is selected
+    if: ${{ github.event.inputs.action == 'Terraform_destroy' }}
     # Specifies the type of runner to use
     runs-on: ubuntu-latest
 
